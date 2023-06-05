@@ -18,6 +18,10 @@ an active eye on the program. This parameter is here if the user wants to utiliz
 ## Usage
 To run the program, simply use the `fishing.exe`. To quit the tool, press the `=` key or `CTRL + C` in the terminal. 
 
+Once started, you have 5 seconds before the program cast the first line. Make sure to keep your mouse in an applicable fishing location.
+
+In the case a catch was missed, the tool will automatically cast another line if nothing was caught in the past 20 seconds. 
+
 # Development Setup
 Pre-requisite is to have Python 3.11.0+ installed using the installation [here](https://www.python.org/downloads/).
 

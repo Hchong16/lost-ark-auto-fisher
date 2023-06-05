@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from keyboard import is_pressed
 from pyautogui import keyUp, keyDown
 from time import sleep
+from threading import Timer
 
 config = ConfigParser()
 config.read('config.ini')
@@ -22,7 +23,7 @@ print("""
 ██     ██    ██      ██    ██        ██   ██ ██   ██ ██  ██  
 ███████ ██████  ███████    ██        ██   ██ ██   ██ ██   ██                                                                                                                                                
 """)
-print("Program has started... start the initial catch and let the program take care of the rest! Press the '=' key or 'CTRL + C' in the terminal to quit anytime!")
+print("Program is starting in 5 secs... move your cursor to an applicable location! Press the '=' key or 'CTRL + C' in the terminal to quit anytime!")
 
 keep_track, catch = False, 0 # Determine whether the program should auto quit or not based on energy amount
 if energy > 0:
@@ -38,7 +39,7 @@ def delay() -> float:
 
 def automate_press() -> None:
     keyDown(keybind)
-    delay()
+    sleep(0.1)
     keyUp(keybind)
 
 def is_caught() -> bool:
@@ -58,9 +59,20 @@ def is_caught() -> bool:
 
     return False
 
+# Set a timer to automatically cast the fishing line in the case it failed unexpectedly. 
+def fail_safe():
+    t = Timer(20, automate_press) # On average, catching one fish from start to finish takes around 17 secs.
+    t.start()
+    return t
+
+sleep(5)
+automate_press()
+t = fail_safe()
+
 while is_pressed('=') == False or (keep_track and catch == 0):
     with mss.mss() as sct:
         if is_caught():
+            t.cancel()
             delay()
             automate_press() # Reel it back!
 
@@ -71,3 +83,5 @@ while is_pressed('=') == False or (keep_track and catch == 0):
             if keep_track:
                 catch -= 1
                 print('[CATCH LEFT]: ' + str(catch))
+
+            t = fail_safe()
