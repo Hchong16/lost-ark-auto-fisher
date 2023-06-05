@@ -10,7 +10,7 @@ Your mileage may vary.
 # User Setup
 **This tool has only been tested on Lost Ark with the following setup: 1080p + Fullscreen + 80% HUD size.**
 
-Before starting the exectuable, make sure to configure the keybinding on your fishing tool in the `config.ini`. Default is the 'F' key.
+Before starting the exectuable, make sure to configure the keybinding on your fishing tool in the `config.ini`. Default key is `f`.
 
 If you wish for the program to end once your life energy is out, fill in the energy field in the configuration file. Otherwise, leave it as `0`. This will require the user to keep an
 an active eye on the program. This parameter is here if the user wants to utilize the casting minigame and/or to use the throw bait skill.
