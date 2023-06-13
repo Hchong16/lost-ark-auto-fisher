@@ -31,12 +31,6 @@ if energy > 0:
     catch = round(int(config["DEFAULT"]['energy'])/60) # Each catch cost 60 energy
     print('[CATCH LEFT]: ' + str(catch))
 
-def delay() -> float:
-    """
-    To prevent bot detection, randomnize delay between actions.
-    """
-    return sleep(random.uniform(0, 1))
-
 def automate_press() -> None:
     keyDown(keybind)
     sleep(0.1)
@@ -61,7 +55,7 @@ def is_caught() -> bool:
 
 # Set a timer to automatically cast the fishing line in the case it failed unexpectedly. 
 def fail_safe():
-    t = Timer(20, automate_press) # On average, catching one fish from start to finish takes around 17 secs.
+    t = Timer(25, automate_press) # On average, catching one fish from start to finish takes around 17 secs.
     t.start()
     return t
 
@@ -73,11 +67,9 @@ while is_pressed('=') == False or (keep_track and catch == 0):
     with mss.mss() as sct:
         if is_caught():
             t.cancel()
-            delay()
             automate_press() # Reel it back!
 
-            sleep(7) # Wait for catch animation
-            delay()
+            sleep(10) # Wait for catch animation
             automate_press() # Start next fish
     
             if keep_track:
